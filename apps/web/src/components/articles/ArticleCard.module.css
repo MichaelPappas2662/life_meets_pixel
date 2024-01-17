@@ -1,0 +1,42 @@
+.card {
+  position: relative;
+  font-family: Apercu, var(--mantine-font-family);
+  background-color: var(--yellow-1);
+  border: rem(1.5px) solid var(--black-1);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+}
+
+.rating {
+  position: absolute;
+  top: var(--mantine-spacing-xs);
+  right: rem(12px);
+  pointer-events: none;
+}
+
+.title {
+  display: block;
+  margin-top: var(--mantine-spacing-md);
+  margin-bottom: rem(5px);
+}
+
+.action {
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-5)
+  );
+
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-1),
+      var(--mantine-color-dark-6)
+    );
+  }
+}
+
+.footer {
+  margin-top: var(--mantine-spacing-md);
+  padding-bottom: 5px;
+  border-radius: 10px;
+  border: rem(1.5px) dashed var(--black-1);
+  background-color: light-dark(var(--green-1), var(--mantine-color-dark-5));
+}

@@ -21,9 +21,60 @@ services:
       - 3001:3001
     networks:
       - app_network
+  strapi:
+    container_name: strapi
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      DATABASE_HOST: strapiDB
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      APP_KEYS: ${APP_KEYS}
+      NODE_ENV: ${NODE_ENV}
+    volumes:
+      - ./apps/api/config:/opt/app/config
+      - ./apps/api/src:/opt/app/src
+      - ./apps/api/package.json:/opt/package.json
+      - ./apps/api/yarn.lock:/opt/yarn.lock
+      - ./apps/api/.env:/opt/app/.env
+      - ./apps/api/public/uploads:/opt/app/public/uploads
+    ports:
+      - "1337:1337"
+    networks:
+      - app_network
+    depends_on:
+      - strapiDB
 
-# Define a network, which allows containers to communicate
-# with each other, by using their container name as a hostname
+  strapiDB:
+    container_name: strapiDB
+    platform: linux/amd64
+    restart: unless-stopped
+    env_file: .env
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - strapi-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+
+volumes:
+  strapi-data:
+
+    # Define a network, which allows containers to communicate
+    # with each other, by using their container name as a hostname
 networks:
   app_network:
     external: true

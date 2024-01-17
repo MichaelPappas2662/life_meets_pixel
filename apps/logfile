@@ -3,3 +3,11 @@
 2024-01-15 19:42:51.693 AEDT [32224] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
 2024-01-15 19:42:51.703 AEDT [32225] LOG:  database system was shut down at 2024-01-15 19:42:34 AEDT
 2024-01-15 19:42:51.708 AEDT [32224] LOG:  database system is ready to accept connections
+2024-01-15 19:52:31.154 AEDT [37042] FATAL:  role "strapi_admin" does not exist
+2024-01-15 19:53:26.803 AEDT [37357] FATAL:  database "api" does not exist
+2024-01-15 19:55:45.192 AEDT [37935] FATAL:  database "api" does not exist
+2024-01-15 20:48:51.851 AEDT [50582] FATAL:  database "api" does not exist
+2024-01-15 21:00:46.956 AEDT [53786] FATAL:  database "api" does not exist
+2024-01-15 21:01:21.964 AEDT [54051] FATAL:  database "api" does not exist
+2024-01-15 21:11:11.716 AEDT [56433] FATAL:  database "api" does not exist
+2024-01-15 21:11:28.153 AEDT [56634] FATAL:  database "api" does not exist
