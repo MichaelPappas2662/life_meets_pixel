@@ -18,7 +18,11 @@ import {
 
 import classes from './ArticleCard.module.css';
 
-export function ArticleCard() {
+interface ArticleCardProps {
+  height?: string;
+}
+
+export function ArticleCard({ height }: ArticleCardProps) {
   const linkProps = {
     href: "https://mantine.dev",
     target: "_blank",

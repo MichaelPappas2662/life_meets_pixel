@@ -3,7 +3,6 @@ import {
   Grid,
   rem,
   SimpleGrid,
-  Skeleton,
 } from '@mantine/core';
 
 import { ArticleCard } from './articles/ArticleCard';
@@ -17,25 +16,31 @@ export function LeadGrid({ articles: articles }: any) {
 
   return (
     <Container size={"lg"} className={classes.wrapper}>
-      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-        <Skeleton height={PRIMARY_COL_HEIGHT} radius="md" animate={false} />
-        <Grid gutter="md">
-          <Grid.Col>
-            {" "}
-            <Skeleton
+      <Grid gutter="md">
+        <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+          <ArticleCard height={PRIMARY_COL_HEIGHT} />
+          {/* Left Column */}
+          <Grid.Col span={12}>
+            <ArticleCard height={PRIMARY_COL_HEIGHT} />
+            <ArticleCard height={PRIMARY_COL_HEIGHT} />
+          </Grid.Col>
+
+          {/* Right Column */}
+          <Grid.Col span={12}>
+            <ArticlesCardsGrid
+              articles={articles}
               height={SECONDARY_COL_HEIGHT}
-              radius="md"
-              animate={false}
             />
           </Grid.Col>
-          <Grid.Col span={6}>
-            <ArticleCard />
+
+          <Grid.Col span={12}>
+            <ArticlesCardsGrid
+              articles={articles}
+              height={SECONDARY_COL_HEIGHT}
+            />
           </Grid.Col>
-          <Grid.Col span={6}>
-            <ArticlesCardsGrid articles={articles} />
-          </Grid.Col>
-        </Grid>
-      </SimpleGrid>
+        </SimpleGrid>
+      </Grid>
     </Container>
   );
 }
