@@ -1,0 +1,24 @@
+/* Web.module.css */
+.container {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .header {
+    background-color: var(--color-yellow);
+    padding: 10px 0;
+    text-align: center;
+  }
+  
+  .hero {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: var(--color-beige);
+  }
+  
+  .footer {
+    background-color: var(--color-navy-700);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+  }
+  

@@ -1,0 +1,5 @@
+2024-01-15 19:42:51.685 AEDT [32224] LOG:  starting PostgreSQL 14.10 (Homebrew) on x86_64-pc-linux-gnu, compiled by gcc-11 (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, 64-bit
+2024-01-15 19:42:51.685 AEDT [32224] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-01-15 19:42:51.693 AEDT [32224] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-01-15 19:42:51.703 AEDT [32225] LOG:  database system was shut down at 2024-01-15 19:42:34 AEDT
+2024-01-15 19:42:51.708 AEDT [32224] LOG:  database system is ready to accept connections
