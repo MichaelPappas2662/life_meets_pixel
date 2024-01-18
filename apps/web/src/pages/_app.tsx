@@ -15,28 +15,53 @@ import {
   Header,
 } from '../components';
 import { SeoGlobalProps } from '../components/seo';
+import { fetchAPI } from '../lib/api';
 
 export const GlobalContext = createContext<SeoGlobalProps>({
+  siteName: "",
   defaultSeo: {
-    metaTitle: "Mantine Next Starter",
-    metaDescription: "Next.js starter template for Mantine UI Framework",
-    shareImage: "https://mantine.dev/social.png",
+    metaTitle: "",
+    metaDescription: "",
+    shareImage: "",
     article: false,
   },
-  siteName: "Mantine Next Starter",
 });
 
 const theme = createTheme({
   /** Put your mantine theme override here */
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   const { global } = pageProps;
   return (
-    <MantineProvider theme={theme}>
-      <Header />
-      <Component {...pageProps} />;
-      <Footer />
-    </MantineProvider>
+    <GlobalContext.Provider value={global.attributes}>
+      <MantineProvider theme={theme}>
+        <Header />
+        <Component {...pageProps} />;
+        <Footer />
+      </MantineProvider>
+    </GlobalContext.Provider>
   );
-}
+};
+
+App.getInitialProps = async (appContext: any) => {
+  let pageProps = {};
+
+  if (appContext.Component.getInitialProps) {
+    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+  }
+
+  // Fetch global site settings from Strapi
+  const globalRes = await fetchAPI("/global", {
+    populate: {
+      favicon: "*",
+      defaultSeo: {
+        populate: "*",
+      },
+    } as any,
+  });
+
+  return { pageProps: { ...pageProps, global: globalRes.data } };
+};
+
+export default App;
