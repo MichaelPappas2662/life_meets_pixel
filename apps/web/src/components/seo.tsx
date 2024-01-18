@@ -14,8 +14,18 @@ interface SeoProps {
   };
 }
 
+export interface SeoGlobalProps {
+  defaultSeo: {
+    metaTitle?: string;
+    metaDescription?: string;
+    shareImage?: string;
+    article?: boolean;
+  };
+  siteName: string;
+}
+
 const Seo = ({ seo }: SeoProps) => {
-  const { defaultSeo, siteName } = useContext(GlobalContext);
+  const { defaultSeo, siteName } = useContext<SeoGlobalProps>(GlobalContext);
   const seoWithDefaults = {
     ...defaultSeo,
     ...seo,
@@ -30,8 +40,10 @@ const Seo = ({ seo }: SeoProps) => {
 
   const fullSeo: FullSeoSettings = {
     ...seoWithDefaults,
-    metaTitle: `${seo?.metaTitle || defaultSeo?.metaTitle} | ${siteName}`,
-    shareImage: seo?.shareImage ? getStrapiMedia(seo.shareImage) : undefined,
+    metaTitle: `${seoWithDefaults?.metaTitle} | ${siteName}`,
+    shareImage: seo?.shareImage
+      ? getStrapiMedia(seoWithDefaults.shareImage)
+      : undefined,
   };
 
   return (

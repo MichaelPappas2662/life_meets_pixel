@@ -1,9 +1,16 @@
 .card {
   position: relative;
-  font-family: Apercu, var(--mantine-font-family);
+  font-family: Roboto, var(--mantine-font-family);
   background-color: var(--yellow-1);
   border: rem(1.5px) solid var(--black-1);
-  box-shadow: 5px 5px 0 rgba(0, 0, 0, 1);
+  box-shadow: 6px 6px 0 var(--mantine-color-gray-4);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+  @mixin hover {
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 1);
+    transform: translateY(-8px) translateX(-8px);
+  }
 }
 
 .rating {
