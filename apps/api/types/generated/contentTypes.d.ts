@@ -927,7 +927,7 @@ export interface ApiWriterWriter extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String;
-    picture: Attribute.Media;
+    picture: Attribute.Media & Attribute.Required;
     articles: Attribute.Relation<
       'api::writer.writer',
       'oneToMany',

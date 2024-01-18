@@ -1,6 +1,11 @@
 import ReactMarkdown from 'react-markdown';
 import Moment from 'react-moment';
 
+import {
+  Container,
+  Text,
+} from '@mantine/core';
+
 import NextImage from '../../components/image';
 import { fetchAPI } from '../../lib/api';
 import { getStrapiMedia } from '../../lib/media';
@@ -8,8 +13,10 @@ import { Article } from '../../types/ApiResponse';
 
 const ArticlePage = ({ article }: { article: Article.Data }) => {
   const imageUrl = getStrapiMedia(article.attributes.banner);
+  const authorImage = article.attributes.image;
+  console.log("Testing", authorImage);
   return (
-    <div>
+    <Container size={"md"}>
       <div
         id="banner"
         className="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light uk-padding uk-margin"
@@ -27,16 +34,24 @@ const ArticlePage = ({ article }: { article: Article.Data }) => {
       <hr className="uk-divider-small" />
       <div className="uk-grid-small uk-flex-left" data-uk-grid="true">
         <NextImage image={article.attributes.image} />
+
+        {article.attributes.author.data.attributes.picture && (
+          <NextImage
+            image={article.attributes.author.data.attributes.picture}
+          />
+        )}
         <div className="uk-width-expand">
-          <p className="uk-margin-remove-bottom">By Michael</p>
-          <p className="uk-text-meta uk-margin-remove-top">
+          <Text fz="sm" inline>
+            By {article.attributes.author.data.attributes.name}
+          </Text>
+          <Text fz="sm" inline>
             <Moment format="MMM Do YYYY">
               {article.attributes.published_at}
             </Moment>
-          </p>
+          </Text>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 
@@ -62,9 +77,9 @@ export async function getStaticProps({ params }: any) {
     },
     populate: "*",
   });
-
+  const categoriesRes = await fetchAPI("/categories");
   return {
-    props: { article: articlesRes.data[0] },
+    props: { article: articlesRes.data[0], categories: categoriesRes },
     revalidate: 1,
   };
 }

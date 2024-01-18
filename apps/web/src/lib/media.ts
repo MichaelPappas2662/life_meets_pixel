@@ -9,3 +9,15 @@ export function getStrapiMedia(media: any) {
   const imageUrl = url?.startsWith("/") ? getStrapiURL(url) : url;
   return imageUrl;
 }
+
+export function getAuthorPicture(author: any) {
+  if (!author || !author.data || !author.data.attributes) {
+    return null;
+  }
+
+  const { picture } = author.data.attributes;
+  const authorImage = picture?.startsWith("/")
+    ? getStrapiURL(picture)
+    : picture;
+  return authorImage;
+}
