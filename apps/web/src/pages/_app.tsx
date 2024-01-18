@@ -10,6 +10,11 @@ import {
   MantineProvider,
 } from '@mantine/core';
 
+import {
+  Footer,
+  Header,
+} from '../components';
+
 export const GlobalContext = createContext({});
 
 const theme = createTheme({
@@ -19,7 +24,9 @@ const theme = createTheme({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider theme={theme}>
+      <Header />
       <Component {...pageProps} />;
+      <Footer />
     </MantineProvider>
   );
 }

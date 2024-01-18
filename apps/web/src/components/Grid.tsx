@@ -18,11 +18,11 @@ export function LeadGrid({ articles: articles }: any) {
     <Container size={"lg"} className={classes.wrapper}>
       <Grid gutter="md">
         <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-          <ArticleCard height={PRIMARY_COL_HEIGHT} />
+          <ArticleCard height={PRIMARY_COL_HEIGHT} article={articles[0]} />
           {/* Left Column */}
           <Grid.Col span={12}>
-            <ArticleCard height={PRIMARY_COL_HEIGHT} />
-            <ArticleCard height={PRIMARY_COL_HEIGHT} />
+            <ArticleCard height={PRIMARY_COL_HEIGHT} article={articles[1]} />
+            <ArticleCard height={PRIMARY_COL_HEIGHT} article={articles[2]} />
           </Grid.Col>
 
           {/* Right Column */}

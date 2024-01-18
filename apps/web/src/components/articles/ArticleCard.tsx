@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import {
   ActionIcon,
   Avatar,
@@ -5,7 +7,6 @@ import {
   Card,
   Center,
   Group,
-  Image,
   rem,
   Text,
   useMantineTheme,
@@ -16,28 +17,43 @@ import {
   IconShare,
 } from '@tabler/icons-react';
 
+import { Article } from '../../types/ApiResponse';
+import NextImage from '../image';
 import classes from './ArticleCard.module.css';
 
 interface ArticleCardProps {
+  article: Article.Data;
   height?: string;
 }
 
-export function ArticleCard({ height }: ArticleCardProps) {
+export function ArticleCard({ height, article }: ArticleCardProps) {
   const linkProps = {
     href: "https://mantine.dev",
     target: "_blank",
     rel: "noopener noreferrer",
   };
   const theme = useMantineTheme();
-
+  const imageUrl = article.attributes.image;
+  const title = article.attributes.title;
+  const description = article.attributes.description;
+  const authorName = article?.attributes?.author?.data?.attributes?.name ?? "";
+  // console.log(authorName);
+  const authorAvatarPicture =
+    article?.attributes?.author?.data?.attributes?.picture ?? "";
+  // console.log(authorAvatarPicture);
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section>
-        <a {...linkProps}>
-          <Image src="https://i.imgur.com/Cij5vdL.png" height={180} />
-        </a>
+        <Link
+          href={`/article/${article.attributes.slug}`}
+          passHref
+          legacyBehavior
+        >
+          <a>
+            <NextImage image={article.attributes.image} />
+          </a>
+        </Link>
       </Card.Section>
-
       <Badge
         className={classes.rating}
         variant="gradient"
@@ -46,28 +62,35 @@ export function ArticleCard({ height }: ArticleCardProps) {
         outstanding
       </Badge>
 
-      <Text className={classes.title} fw={500} component="a" {...linkProps}>
-        Resident Evil Village review
+      <Text
+        className={classes.title}
+        fw={500}
+        component="a"
+        href={`/article/${article.attributes.slug}`}
+      >
+        {title}
+      </Text>
+      <Text fz="sm" c="dimmed" lineClamp={4}>
+        {description}
       </Text>
 
-      <Text fz="sm" c="dimmed" lineClamp={4}>
+      {/* <Text className={classes.title} fw={500} component="a" {...linkProps}>
+        Resident Evil Village review
+      </Text> */}
+      {/* <Text fz="sm" c="dimmed" lineClamp={4}>
         Resident Evil Village is a direct sequel to 2017’s Resident Evil 7, but
         takes a very different direction to its predecessor, namely the fact
         that this time round instead of fighting against various mutated
         zombies, you’re now dealing with more occult enemies like werewolves and
         vampires.
-      </Text>
+      </Text> */}
 
+      {/* Footer with author info and actions */}
       <Group justify="space-between" className={classes.footer}>
         <Center>
-          <Avatar
-            src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
-            size={24}
-            radius="xl"
-            mr="xs"
-          />
+          <Avatar src={authorAvatarPicture} size={24} radius="xl" mr="xs" />
           <Text fz="sm" inline>
-            Bill Wormeater
+            {authorName}
           </Text>
         </Center>
 

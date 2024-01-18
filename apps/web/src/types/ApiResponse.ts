@@ -4,13 +4,21 @@ export module Article {
   export interface Attributes {
     title: string;
     content: string;
+    author: {
+      data: {
+        attributes: {
+          picture: string;
+          name: string;
+        };
+      };
+    };
     created_at: string;
     updated_at: string;
     published_at: string;
     description: string;
     slug: string;
-    image: StrapiImage.Data;
-    banner: StrapiImage.Data | null;
+    image: StrapiImage;
+    banner: StrapiImage;
   }
 
   export interface Data {

@@ -62,7 +62,6 @@ export async function getStaticProps({ params }: any) {
     },
     populate: "*",
   });
-  // console.log(articlesRes.data[0]);
 
   return {
     props: { article: articlesRes.data[0] },

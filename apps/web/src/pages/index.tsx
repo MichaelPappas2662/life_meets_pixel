@@ -1,6 +1,4 @@
 import {
-  Footer,
-  Header,
   Hero,
   LeadGrid,
 } from '../components';
@@ -13,22 +11,29 @@ const Home = ({ articles, homepage }: any) => {
     <>
       <Seo seo={homepage?.attributes?.seo} />
       <div className={styles.container}>
-        <Header />
         <Hero />
         <LeadGrid articles={articles} />
-        <Footer />
       </div>
     </>
   );
 };
 
 export async function getStaticProps() {
-  const [articlesRes] = await Promise.all([
+  const [articlesRes, categoriesRes] = await Promise.all([
     fetchAPI("/articles", { populate: "*" }),
+    fetchAPI("/categories", { populate: "*" }),
+    // fetchAPI("/homepage", {
+    //   populate: {
+    //     hero: "*",
+    //     seo: { populate: "*" },
+    //   } as any,
+    // }),
   ]);
+
   return {
     props: {
       articles: articlesRes.data,
+      categories: categoriesRes.data,
     },
     revalidate: 1,
   };

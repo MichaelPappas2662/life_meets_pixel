@@ -4,7 +4,7 @@ import { getStrapiMedia } from '../lib/media';
 
 const Image = ({ image }: any) => {
   const { alternativeText, width, height } = image?.data[0].attributes ?? {};
-  console.log(image.data[0].attributes);
+
   const loader = () => {
     return getStrapiMedia(image);
   };

@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sections_sections",
+  "info": {
+    "displayName": "Sections.hero",
+    "icon": "folder",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}

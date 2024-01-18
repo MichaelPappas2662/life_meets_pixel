@@ -50,5 +50,6 @@ export async function fetchAPI(
     throw new Error(`An error occurred please try again`);
   }
   const data = await response.json();
+
   return data;
 }
