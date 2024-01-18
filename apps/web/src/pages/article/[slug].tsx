@@ -6,14 +6,22 @@ import {
   Text,
 } from '@mantine/core';
 
-import NextImage from '../../components/image';
+import Image2 from '../../components/image';
 import { fetchAPI } from '../../lib/api';
 import { getStrapiMedia } from '../../lib/media';
 import { Article } from '../../types/ApiResponse';
 
-const ArticlePage = ({ article }: { article: Article.Data }) => {
+const ArticlePage = ({
+  article,
+  author,
+}: {
+  article: Article.Data;
+  author: any;
+}) => {
   const imageUrl = getStrapiMedia(article.attributes.banner);
-  const authorImage = article.attributes.image;
+  const authorImage = getStrapiMedia(
+    author.attributes.author.data.attributes.picture.data.attributes
+  );
   console.log("Testing", authorImage);
   return (
     <Container size={"md"}>
@@ -33,13 +41,9 @@ const ArticlePage = ({ article }: { article: Article.Data }) => {
       </div>
       <hr className="uk-divider-small" />
       <div className="uk-grid-small uk-flex-left" data-uk-grid="true">
-        <NextImage image={article.attributes.image} />
+        <Image2 image={article.attributes.image} />
 
-        {article.attributes.author.data.attributes.picture && (
-          <NextImage
-            image={article.attributes.author.data.attributes.picture}
-          />
-        )}
+        {authorImage && <Image2 image={authorImage} />}
         <div className="uk-width-expand">
           <Text fz="sm" inline>
             By {article.attributes.author.data.attributes.name}
@@ -76,10 +80,31 @@ export async function getStaticProps({ params }: any) {
       slug: params.slug,
     },
     populate: "*",
+    encodeValuesOnly: true,
   });
+
+  const authorRes = await fetchAPI("/articles", {
+    filters: {
+      slug: params.slug,
+    },
+    populate: {
+      author: {
+        populate: "*",
+      },
+    },
+    encodeValuesOnly: true,
+  });
+  console.log(
+    "author",
+    authorRes.data[0].attributes.author.data.attributes.picture.data.attributes
+  );
   const categoriesRes = await fetchAPI("/categories");
   return {
-    props: { article: articlesRes.data[0], categories: categoriesRes },
+    props: {
+      article: articlesRes.data[0],
+      author: authorRes.data[0],
+      categories: categoriesRes,
+    },
     revalidate: 1,
   };
 }

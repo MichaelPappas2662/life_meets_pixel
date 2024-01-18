@@ -1,7 +1,5 @@
 import qs from 'qs';
 
-import { FetchAPIParams } from '../types/FetchApiParam';
-
 /**
  * Get full Strapi URL from path
  * @param {string} path Path of the URL
@@ -22,7 +20,7 @@ export function getStrapiURL(path = ""): string {
  */
 export async function fetchAPI(
   path: string,
-  urlParamsObject: FetchAPIParams = {},
+  urlParamsObject: any = {},
   options: RequestInit = {}
 ): Promise<any> {
   const apiToken = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
@@ -40,7 +38,7 @@ export async function fetchAPI(
   const requestUrl = `${getStrapiURL(
     `/api${path}${queryString ? `?${queryString}` : ""}`
   )}`;
-
+  console.log("requestUrl", requestUrl);
   // Trigger API call
   const response = await fetch(requestUrl, mergedOptions);
 
