@@ -35,7 +35,6 @@ export function ArticleCard({ height, article, author }: ArticleCardProps) {
   const authorName = article?.attributes?.author?.data?.attributes?.name ?? "";
 
   const authorAvatarPicture = getStrapiMedia(author?.attributes?.picture);
-
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section>
@@ -44,9 +43,7 @@ export function ArticleCard({ height, article, author }: ArticleCardProps) {
           passHref
           legacyBehavior
         >
-          <a>
-            <NextImage image={article.attributes.image} />
-          </a>
+          <NextImage image={article.attributes.image} />
         </Link>
       </Card.Section>
       <Badge

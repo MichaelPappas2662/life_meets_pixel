@@ -11,23 +11,29 @@ import { ArticleCard } from './ArticleCard';
 interface ArticlesCardsGridProps {
   articles: Article.Data[];
   height: string;
-  author?: Article.Data["attributes"]["author"]["data"];
+  authors: Article.Data["attributes"]["author"]["data"][];
 }
 
 export function ArticlesCardsGrid({
   articles,
   height,
-  author,
+  authors,
 }: ArticlesCardsGridProps) {
-  const cards = articles.map((article: Article.Data) => (
-    <Link
-      href={`/article/${article.attributes.slug}`}
-      key={article.id}
-      legacyBehavior
-    >
-      <ArticleCard height={height} article={article} author={author} />
-    </Link>
-  ));
+  const cards = articles.map((article) => {
+    const articleAuthor = authors.find(
+      (author) => author.id === article.attributes.author.data.id
+    );
+
+    return (
+      <Link
+        href={`/article/${article.attributes.slug}`}
+        key={article.id}
+        legacyBehavior
+      >
+        <ArticleCard height={height} article={article} author={articleAuthor} />
+      </Link>
+    );
+  });
 
   return (
     <Container py="xl">

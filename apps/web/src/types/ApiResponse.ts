@@ -6,6 +6,7 @@ export module Article {
     content: string;
     author: {
       data: {
+        id: string;
         attributes: {
           picture: string;
           name: string;

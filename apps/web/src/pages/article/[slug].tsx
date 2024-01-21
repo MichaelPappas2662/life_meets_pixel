@@ -15,13 +15,18 @@ import { Article } from '../../types/ApiResponse';
 
 const ArticlePage = ({
   article,
-  author,
+  authors,
 }: {
   article: Article.Data;
-  author: Article.Data["attributes"]["author"]["data"];
+  authors: Article.Data["attributes"]["author"]["data"][];
 }) => {
   const imageUrl = getStrapiMedia(article.attributes.banner);
-  const authorImage = getStrapiMedia(author.attributes.picture);
+  const specificAuthor = authors?.find(
+    (author) => author.id === article.attributes.author.data.id
+  );
+
+  console.log("specificAuthor", specificAuthor);
+  const authorImage = getStrapiMedia(specificAuthor?.attributes?.picture);
   return (
     <Container size={"md"}>
       <div
@@ -93,7 +98,7 @@ export async function getStaticProps({ params }: any) {
   return {
     props: {
       article: articlesRes.data[0],
-      author: authorRes.data[0],
+      authors: authorRes.data,
       categories: categoriesRes,
     },
     revalidate: 1,

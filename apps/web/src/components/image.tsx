@@ -3,15 +3,7 @@ import NextImage from 'next/image';
 import { getStrapiMedia } from '../lib/media';
 
 const Image = ({ image }: any) => {
-  const attributes = image?.data?.attributes;
-
-  let alternativeText, width, height;
-
-  if (attributes) {
-    alternativeText = attributes.alternativeText;
-    width = attributes.width;
-    height = attributes.height;
-  }
+  const { url, alternativeText, width, height } = image?.data?.attributes;
 
   const loader = () => {
     return getStrapiMedia(image);
