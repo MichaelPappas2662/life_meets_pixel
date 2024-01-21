@@ -14,7 +14,7 @@ interface HomeProps {
   author: Article.Data["attributes"]["author"]["data"][];
 }
 
-const Home = ({ articles, homepage, author }: HomeProps) => {
+const Home = ({ articles, homepage, author, categories }: HomeProps) => {
   return (
     <>
       <Seo seo={homepage?.attributes?.seo} />
@@ -65,7 +65,7 @@ export async function getStaticProps() {
         } as any,
       }),
     ]);
-
+    console.log("categoriesProps", categories);
     return {
       props: {
         author: author.data,

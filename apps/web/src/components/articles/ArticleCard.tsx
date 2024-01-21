@@ -30,8 +30,8 @@ interface ArticleCardProps {
 
 export function ArticleCard({ height, article, author }: ArticleCardProps) {
   const theme = useMantineTheme();
-  const title = article.attributes.title;
-  const description = article.attributes.description;
+  const title = article?.attributes?.title;
+  const description = article?.attributes?.description;
   const authorName = article?.attributes?.author?.data?.attributes?.name ?? "";
 
   const authorAvatarPicture = getStrapiMedia(author?.attributes?.picture);
@@ -39,11 +39,11 @@ export function ArticleCard({ height, article, author }: ArticleCardProps) {
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section>
         <Link
-          href={`/article/${article.attributes.slug}`}
+          href={`/article/${article?.attributes?.slug}`}
           passHref
           legacyBehavior
         >
-          <NextImage image={article.attributes.image} />
+          <NextImage image={article?.attributes?.image} />
         </Link>
       </Card.Section>
       <Badge
@@ -58,7 +58,7 @@ export function ArticleCard({ height, article, author }: ArticleCardProps) {
         className={classes.title}
         fw={500}
         component="a"
-        href={`/article/${article.attributes.slug}`}
+        href={`/article/${article?.attributes?.slug}`}
       >
         {title}
       </Text>

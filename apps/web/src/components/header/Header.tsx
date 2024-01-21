@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import {
   Autocomplete,
   Burger,
@@ -7,6 +9,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { IconSearch } from '@tabler/icons-react';
 
+import { useCategories } from '../../lib/context/CategoriesContext';
 import classes from './Header.module.css';
 
 const links = [
@@ -19,15 +22,19 @@ const links = [
 export function Header() {
   const [opened, { toggle }] = useDisclosure(false);
 
-  const items = links.map((link) => (
-    <a
-      key={link.label}
-      href={link.link}
-      className={classes.link}
-      onClick={(event) => event.preventDefault()}
+  const categoriesContext = useCategories();
+
+  const safeCategories = categoriesContext ? categoriesContext.data : [];
+  console.log("safeCategories", safeCategories);
+  const items = safeCategories?.map((category: any) => (
+    <Link
+      key={category.attributes.name}
+      href={`/category/${category.attributes.slug}`}
+      passHref
+      legacyBehavior
     >
-      {link.label}
-    </a>
+      <a className={classes.link}>{category.attributes.name}</a>
+    </Link>
   ));
 
   return (

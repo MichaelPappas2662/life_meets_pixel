@@ -10,12 +10,10 @@ import {
   MantineProvider,
 } from '@mantine/core';
 
-import {
-  Footer,
-  Header,
-} from '../components';
+import RootLayout from '../components/common/layout';
 import { SeoGlobalProps } from '../components/seo';
 import { fetchAPI } from '../lib/api';
+import CategoriesContext from '../lib/context/CategoriesContext';
 
 export const GlobalContext = createContext<SeoGlobalProps>({
   siteName: "",
@@ -27,19 +25,23 @@ export const GlobalContext = createContext<SeoGlobalProps>({
   },
 });
 
-const theme = createTheme({
-  /** Put your mantine theme override here */
-});
+const theme = createTheme({});
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { global } = pageProps;
+  const categories = pageProps.categories || [];
+
+  console.log("categoriesApp", categories);
+
   return (
     <GlobalContext.Provider value={global.attributes}>
-      <MantineProvider theme={theme}>
-        <Header />
-        <Component {...pageProps} />;
-        <Footer />
-      </MantineProvider>
+      <CategoriesContext.Provider value={categories}>
+        <MantineProvider theme={theme}>
+          <RootLayout>
+            <Component {...pageProps} />;
+          </RootLayout>
+        </MantineProvider>
+      </CategoriesContext.Provider>
     </GlobalContext.Provider>
   );
 };
