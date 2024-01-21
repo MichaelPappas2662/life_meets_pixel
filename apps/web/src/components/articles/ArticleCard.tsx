@@ -17,6 +17,7 @@ import {
   IconShare,
 } from '@tabler/icons-react';
 
+import { getStrapiMedia } from '../../lib/media';
 import { Article } from '../../types/ApiResponse';
 import NextImage from '../image';
 import classes from './ArticleCard.module.css';
@@ -24,23 +25,17 @@ import classes from './ArticleCard.module.css';
 interface ArticleCardProps {
   article: Article.Data;
   height?: string;
+  author?: Article.Data["attributes"]["author"]["data"];
 }
 
-export function ArticleCard({ height, article }: ArticleCardProps) {
-  const linkProps = {
-    href: "https://mantine.dev",
-    target: "_blank",
-    rel: "noopener noreferrer",
-  };
+export function ArticleCard({ height, article, author }: ArticleCardProps) {
   const theme = useMantineTheme();
-  const imageUrl = article.attributes.image;
   const title = article.attributes.title;
   const description = article.attributes.description;
   const authorName = article?.attributes?.author?.data?.attributes?.name ?? "";
-  // console.log(authorName);
-  const authorAvatarPicture =
-    article?.attributes?.author?.data?.attributes?.picture ?? "";
-  // console.log(authorAvatarPicture);
+
+  const authorAvatarPicture = getStrapiMedia(author?.attributes?.picture);
+
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section>
@@ -74,18 +69,6 @@ export function ArticleCard({ height, article }: ArticleCardProps) {
         {description}
       </Text>
 
-      {/* <Text className={classes.title} fw={500} component="a" {...linkProps}>
-        Resident Evil Village review
-      </Text> */}
-      {/* <Text fz="sm" c="dimmed" lineClamp={4}>
-        Resident Evil Village is a direct sequel to 2017’s Resident Evil 7, but
-        takes a very different direction to its predecessor, namely the fact
-        that this time round instead of fighting against various mutated
-        zombies, you’re now dealing with more occult enemies like werewolves and
-        vampires.
-      </Text> */}
-
-      {/* Footer with author info and actions */}
       <Group justify="space-between" className={classes.footer}>
         <Center>
           <Avatar src={authorAvatarPicture} size={24} radius="xl" mr="xs" />

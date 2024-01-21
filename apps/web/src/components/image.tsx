@@ -3,9 +3,8 @@ import NextImage from 'next/image';
 import { getStrapiMedia } from '../lib/media';
 
 const Image = ({ image }: any) => {
-  const attributes = image?.data[0]?.attributes;
+  const attributes = image?.data?.attributes;
 
-  console.log("attributes", attributes);
   let alternativeText, width, height;
 
   if (attributes) {

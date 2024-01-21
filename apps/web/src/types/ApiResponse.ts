@@ -12,9 +12,9 @@ export module Article {
         };
       };
     };
-    created_at: string;
-    updated_at: string;
-    published_at: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
     description: string;
     slug: string;
     image: StrapiImage;

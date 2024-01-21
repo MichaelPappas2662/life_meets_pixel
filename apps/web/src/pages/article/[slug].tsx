@@ -2,11 +2,13 @@ import ReactMarkdown from 'react-markdown';
 import Moment from 'react-moment';
 
 import {
+  Avatar,
   Container,
+  Divider,
   Text,
 } from '@mantine/core';
 
-import Image2 from '../../components/image';
+import StrapiImage from '../../components/image';
 import { fetchAPI } from '../../lib/api';
 import { getStrapiMedia } from '../../lib/media';
 import { Article } from '../../types/ApiResponse';
@@ -16,13 +18,10 @@ const ArticlePage = ({
   author,
 }: {
   article: Article.Data;
-  author: any;
+  author: Article.Data["attributes"]["author"]["data"];
 }) => {
   const imageUrl = getStrapiMedia(article.attributes.banner);
-  const authorImage = getStrapiMedia(
-    author.attributes.author.data.attributes.picture.data.attributes
-  );
-  console.log("Testing", authorImage);
+  const authorImage = getStrapiMedia(author.attributes.picture);
   return (
     <Container size={"md"}>
       <div
@@ -33,28 +32,28 @@ const ArticlePage = ({
         data-uk-img
       >
         <h1>{article.attributes.title}</h1>
-      </div>
-      <div className="uk-section">
-        <div className="uk-container uk-container-small"></div>
-        <h2>{article.attributes.description}</h2>
-        <ReactMarkdown children={article.attributes.content} />
-      </div>
-      <hr className="uk-divider-small" />
-      <div className="uk-grid-small uk-flex-left" data-uk-grid="true">
-        <Image2 image={article.attributes.image} />
 
-        {authorImage && <Image2 image={authorImage} />}
+        <Avatar src={authorImage} />
         <div className="uk-width-expand">
           <Text fz="sm" inline>
             By {article.attributes.author.data.attributes.name}
           </Text>
           <Text fz="sm" inline>
             <Moment format="MMM Do YYYY">
-              {article.attributes.published_at}
+              {article.attributes.publishedAt}
             </Moment>
           </Text>
+          <Divider />
         </div>
+        <br />
+        <StrapiImage image={article.attributes.image} />
+        <br />
+        <ReactMarkdown children={article.attributes.content} />
+        <br />
+        <StrapiImage image={article.attributes.banner} />
       </div>
+
+      <div className="uk-grid-small uk-flex-left" data-uk-grid="true"></div>
     </Container>
   );
 };
@@ -83,21 +82,13 @@ export async function getStaticProps({ params }: any) {
     encodeValuesOnly: true,
   });
 
-  const authorRes = await fetchAPI("/articles", {
+  const authorRes = await fetchAPI("/writers", {
     filters: {
-      slug: params.slug,
+      slug: articlesRes.data[0].attributes.author.data.attributes.slug,
     },
-    populate: {
-      author: {
-        populate: "*",
-      },
-    },
+    populate: "*",
     encodeValuesOnly: true,
   });
-  console.log(
-    "author",
-    authorRes.data[0].attributes.author.data.attributes.picture.data.attributes
-  );
   const categoriesRes = await fetchAPI("/categories");
   return {
     props: {

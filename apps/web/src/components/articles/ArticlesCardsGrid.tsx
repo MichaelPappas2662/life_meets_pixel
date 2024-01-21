@@ -11,11 +11,13 @@ import { ArticleCard } from './ArticleCard';
 interface ArticlesCardsGridProps {
   articles: Article.Data[];
   height: string;
+  author?: Article.Data["attributes"]["author"]["data"];
 }
 
 export function ArticlesCardsGrid({
   articles,
   height,
+  author,
 }: ArticlesCardsGridProps) {
   const cards = articles.map((article: Article.Data) => (
     <Link
@@ -23,7 +25,7 @@ export function ArticlesCardsGrid({
       key={article.id}
       legacyBehavior
     >
-      <ArticleCard height={height} article={article} />
+      <ArticleCard height={height} article={article} author={author} />
     </Link>
   ));
 
